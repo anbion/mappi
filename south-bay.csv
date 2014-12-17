@@ -1,216 +1,30 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Circles</title>
-    <style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-      }
-    </style>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script>
-// This example creates circles on the map, representing
-// populations in North America.
-
-// First, create an object containing LatLng and radius for each city.
-var citymap = {};
-citymap['@Mountain View'] = {
-  center: new google.maps.LatLng(37.4038194,-122.081267),
-  radius: 3800
-};
-
-citymap['@Los Altos'] = {
-  center: new google.maps.LatLng(37.3605064,-122.1102000),
-  radius: 3800
-};
-
-citymap['@Sunnyvale'] = {
-  center: new google.maps.LatLng(37.3734406,-122.0224043),
-  radius: 4000
-};
-
-citymap['@Cupertino'] = {
-  center: new google.maps.LatLng(37.3206566,-122.0493992),
-  radius: 4200
-};
-
-citymap['@Santa Clara'] = {
-  center: new google.maps.LatLng(37.351206, -121.957830),
-  radius: 4000
-};
-
-
-citymap['@Campbell'] = {
-  center: new google.maps.LatLng(37.2796889,-121.9603159),
-  radius: 2000
-};
-
-citymap['@West Valley'] = {
-  center: new google.maps.LatLng(37.3048651,-121.9924574),
-  radius: 2000
-};
-
-citymap['@San Jose'] = {
-  center: new google.maps.LatLng(37.3194076,-121.8750892),
-  radius: 7000
-};
-
-citymap['@Saratoga'] = {
-  center: new google.maps.LatLng(37.260322, -122.013784),
-  radius: 3300
-};
-
-citymap['@Los Gatos'] = {
-  center: new google.maps.LatLng(37.229722, -121.948960),
-  radius: 3300
-};
-
-
-citymap['@Milpitas'] = {
-  center: new google.maps.LatLng(37.4310129,-121.9103743),
-  radius: 4000
-};
-
-citymap['@Palo Alto'] = {
-  center: new google.maps.LatLng(37.434102, -122.130801),
-  radius: 3600
-};
-
-citymap['@Facebook'] = {
-  center: new google.maps.LatLng(37.477236, -122.156502),
-  radius: 1500
-};
-
-citymap['@Menlo Park'] = {
-  center: new google.maps.LatLng(37.448350, -122.187229),
-  radius: 2500
-};
-
-
-citymap['@Redwood City'] = {
-  center: new google.maps.LatLng(37.481642, -122.236643),
-  radius: 3500
-};
-
-citymap['@Redwood Shores'] = {
-  center: new google.maps.LatLng(37.534547, -122.248387),
-  radius: 2000
-};
-
-citymap['@Foster City'] = {
-  center: new google.maps.LatLng(37.564440, -122.270019),
-  radius: 1500
-};
-
-citymap['@San Carlos'] = {
-  center: new google.maps.LatLng(37.510307, -122.262594),
-  radius: 1000
-};
-
-citymap['@Belmont'] = {
-  center: new google.maps.LatLng(37.519883, -122.279710),
-  radius: 1000
-};
-
-citymap['@San Mateo'] = {
-  center: new google.maps.LatLng(37.540597, -122.320652),
-  radius: 3500
-};
-
-citymap['@Portola Valley'] = {
-  center: new google.maps.LatLng(37.369540, -122.220308),
-  radius: 3200
-};
-
-citymap['@Woodside'] = {
-  center: new google.maps.LatLng(37.421045, -122.253979),
-  radius: 3200
-};
-
-citymap['@Burlingame'] = {
-  center: new google.maps.LatLng(37.5801518,-122.3652135),
-  radius: 2000
-};
-
-citymap['@Hillsborough'] = {
-  center: new google.maps.LatLng(37.553016, -122.363296),
-  radius: 1200
-};
-
-
-citymap['@Millbrae'] = {
-  center: new google.maps.LatLng(37.598895, -122.401540),
-  radius: 1800
-};
-
-
-citymap['@SFO'] = {
-  center: new google.maps.LatLng(37.621281, -122.379458),
-  radius: 2000
-};
-
-citymap['@San Bruno'] = {
-  center: new google.maps.LatLng(37.625344, -122.425509),
-  radius: 2000
-};
-
-citymap['@South San Francisco'] = {
-  center: new google.maps.LatLng(37.654779, -122.415013),
-  radius: 2900
-};
-
-
-citymap['@Daly City'] = {
-  center: new google.maps.LatLng(37.679958, -122.473138),
-  radius: 2800
-};
-
-
-citymap['@Brisbane'] = {
-  center: new google.maps.LatLng(37.692379, -122.404557),
-  radius: 1500
-};
-
-var cityCircle;
-
-function initialize() {
-  // Create the map.
-  var mapOptions = {
-    zoom: 11,
-    center: new google.maps.LatLng(37.42565, -122.13535),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-
-  var map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-
-  // Construct the circle for each value in citymap.
-  for (var city in citymap) {
-    var circleOptions = {
-      strokeColor: '#d45b5b',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#d45b5b',
-      fillOpacity: 0.35,
-      map: map,
-      center: citymap[city].center,
-      //radius: Math.sqrt(citymap[city].population) * 100
-      radius: citymap[city].radius
-    };
-    // Add the circle for this city to the map.
-    cityCircle = new google.maps.Circle(circleOptions);
-  }
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
-
-    </script>
-  </head>
-  <body>
-    <div id="map-canvas"></div>
-  </body>
-</html>
+@Mountain View, 37.4038194,-122.081267), 3800
+@Los Altos, 37.3605064,-122.1102000), 3800
+@Sunnyvale, 37.3734406,-122.0224043), 4000
+@Cupertino 37.3206566,-122.0493992), 4200
+@Santa Clara 37.351206, -121.957830), 4000
+@Campbell 37.2796889,-121.9603159), 2000
+@West Valley 37.3048651,-121.9924574), 2000
+@San Jose 37.3194076,-121.8750892), 7000
+@Saratoga 37.260322, -122.013784), 3300
+@Los Gatos 37.229722, -121.948960), 3300
+@Milpitas 37.4310129,-121.9103743), 4000
+@Menlo Park 37.448350, -122.187229), 2500
+@Redwood City 37.481642, -122.236643), 3500
+@Redwood Shores 37.534547, -122.248387), 2000
+@Foster City 37.564440, -122.270019), 1500
+@San Carlos 37.510307, -122.262594), 1000
+@Belmont 37.519883, -122.279710), 1000
+@San Mateo 37.540597, -122.320652), 3500
+@Portola Valley 37.369540, -122.220308), 3200
+@Woodside 37.421045, -122.253979), 3200
+@Burlingame 37.5801518,-122.3652135), 2000
+@Hillsborough 37.553016, -122.363296), 1200
+@Millbrae 37.598895, -122.401540), 1800
+@SFO 37.621281, -122.379458), 2000
+@San Bruno 37.625344, -122.425509), 2000
+@South San Francisco 37.654779, -122.415013), 2900
+@Daly City 37.679958, -122.473138), 2800
+@Brisbane 37.692379, -122.404557), 1500
+@Googleplex 37.425036, -122.080072), 1000
+@Facebook 37.477236, -122.156502), 1500
