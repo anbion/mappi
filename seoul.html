@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Mappi</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+
+// Create an object containing LatLng and radius for each city or land mark.
+var citymap = {};
+citymap['@Seoul'] = {
+  center: new google.maps.LatLng(37.5651,126.98955),
+  radius: 17000
+};
+
+citymap['@Incheon'] = {
+  center: new google.maps.LatLng(37.553334,126.6306171),
+  radius: 15000
+};
+
+citymap['@ICN-Incheon Int Airport'] = {
+  center: new google.maps.LatLng(37.460191,126.440696),
+  radius: 5000
+};
+
+var cityCircle;
+
+function initialize() {
+  // Create the map.
+  var mapOptions = {
+    zoom: 10,
+    center: new google.maps.LatLng(37.5651,126.98955),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  // Construct the circle for each value in citymap.
+  for (var city in citymap) {
+    var circleOptions = {
+      strokeColor: '#d45b5b',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#d45b5b',
+      fillOpacity: 0.35,
+      map: map,
+      center: citymap[city].center,
+      //radius: Math.sqrt(citymap[city].population) * 100
+      radius: citymap[city].radius
+    };
+    // Add the circle for this city to the map.
+    cityCircle = new google.maps.Circle(circleOptions);
+  }
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
