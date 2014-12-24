@@ -31,12 +31,17 @@ citymap['@Waikiki'] = {
   radius: 1550
 };
 
+citymap['@HNL'] = {
+  center: new google.maps.LatLng(21.324513,-157.925074),
+  radius: 1550
+};
+
 var cityCircle;
 
 function initialize() {
   // Create the map.
   var mapOptions = {
-    zoom: 12,
+    zoom: 11,
     center: new google.maps.LatLng(21.461390, -157.985828),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
